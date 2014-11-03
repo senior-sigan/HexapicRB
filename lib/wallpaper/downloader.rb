@@ -1,7 +1,7 @@
 class Downloader
   def self.get(picture)
     pictures_dir = File.join(Dir.home, 'Pictures', 'wallpaper')
-    Dir.mkdir unless Dir.exists? pictures_dir
+    Dir.mkdir(pictures_dir) unless Dir.exists? pictures_dir
 
     file_path = File.join(pictures_dir, picture.filename)
     
