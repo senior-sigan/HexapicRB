@@ -1,7 +1,4 @@
-class MateWallpaperSetter
-  def initialize    
-  end
-  
+class MateWallpaperSetter 
   def set(path)
     comand = "gsettings set org.mate.background picture-filename #{path}"
     puts comand

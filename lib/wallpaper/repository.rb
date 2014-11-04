@@ -11,7 +11,7 @@ module Repository
     def find_picture
       options = {}
       options[:tag_mode] = 'and'
-      options[:tags] = 'nature'
+      options[:tags] = 'nature,sunset'
       options[:sort] = 'relevance'
       options[:content_type] = '1'
       options[:extras] = 'url_o,url_l'
