@@ -22,7 +22,14 @@ module Wallpaper
       end
     end
 
-    DE = {mate: Mate, gnome3: Gnome3, xfce4: XFCE4}
+    class KDE4
+      def set(path)
+        comand = "dbus-send --session --dest=org.new_wallpaper.Plasmoid --type=method_call /org/new_wallpaper/Plasmoid/0 org.new_wallpaper.Plasmoid.SetWallpaper string:#{path}"
+        system comand
+      end
+    end
+
+    DE = {mate: Mate, gnome3: Gnome3, xfce4: XFCE4, kde4: KDE4}
 
     def self.build
       klass = DE[DesktopEnvironment.which]
