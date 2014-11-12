@@ -1,8 +1,10 @@
+require 'fileutils'
+
 module Wallpaper
   class Downloader
     def self.get(picture)
       pictures_dir = File.join(Dir.home, 'Pictures', 'wallpaper')
-      Dir.mkdir(pictures_dir) unless Dir.exists? pictures_dir
+      FileUtils.mkdir_p(pictures_dir) unless Dir.exists? pictures_dir
 
       file_path = File.join(pictures_dir, picture.filename)
       

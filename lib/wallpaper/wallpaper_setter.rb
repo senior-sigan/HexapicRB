@@ -1,17 +1,6 @@
 require_relative "desktop_environment"
 module Wallpaper
   module WallpaperSetter
-    def self.build
-      case DesktopEnvironment.which
-      when :mate
-        Mate.new
-      when :gnome3
-        Gnome3.new
-      when :xfce4
-        XFCE4.new
-      end
-    end
-
     class XFCE4
       def set(path)
         command = "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorLVDS1/workspace1/last-image -s #{path}"
@@ -31,6 +20,13 @@ module Wallpaper
         comand = "gsettings set org.mate.background picture-filename #{path}"
         system comand
       end
+    end
+
+    DE = {mate: Mate, gnome3: Gnome3, xfce4: XFCE4}
+
+    def self.build
+      klass = DE[DesktopEnvironment.which]
+      klass.new unless klass.nil?
     end
   end
 end
