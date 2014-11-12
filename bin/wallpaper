@@ -8,15 +8,14 @@ rescue LoadError
 end
 
 include Wallpaper
-
-Wallpaper.set('67P')
+require 'choice'
 
 def help
   puts 'TODO: write help'
 end
 
 def set_wallpaper
-  tags = 'nature'
+  tags = Choice.choices[:tags] || ENV['WALLPAPER_TAGS'] || 'nature'
   runner = Wallpaper::Runner.new(tags)
   runner.run
 end
@@ -26,4 +25,26 @@ def print_version
   exit 0
 end
 
-set_wallpaper
+Choice.options do
+  option :version do
+    long '--version'
+    short '-v'
+    desc 'print version and exit'
+    action { print_version }
+  end
+
+  option :tags do
+    long '--tags=TAGS'
+    short '-t'
+    desc 'comma separated list of tags'
+    cast String
+  end
+end
+
+if Choice.choices[:tags]
+  set_wallpaper
+elsif Choice.choices[:version]
+  print_version
+else
+  help
+end
