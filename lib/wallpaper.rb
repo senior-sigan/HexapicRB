@@ -1,27 +1,8 @@
-require_relative "wallpaper/version"
-require_relative "wallpaper/mate_wallpaper_setter"
-require_relative "wallpaper/repository"
-require_relative "wallpaper/downloader"
-require_relative "wallpaper/desktop_environment"
+$LOAD_PATH.unshift File.expand_path('.')
 
-module Wallpaper
-  def self.start
-    setter = nil
-    case DesktopEnvironment.which
-    when :mate
-      setter = MateWallpaperSetter.new
-    when :gnome3
-      setter = GnomeWallpaperSetter.new
-    when :xfce4
-      setter = XfceWallpaperSetter.new
-    end
-  
-    repository = Repository::FlickrRepository.new
-    picture = repository.find_picture
-    picture.path = Downloader.get picture
+require 'wallpaper/version'
+require 'wallpaper/wallpaper_setter'
+require 'wallpaper/repository'
+require 'wallpaper/downloader'
 
-    setter.set picture.path
-  end
-end
-
-Wallpaper.start
+require 'wallpaper/runner'

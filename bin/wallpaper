@@ -1,5 +1,29 @@
 #!/usr/bin/env ruby
 
-require 'wallpaper'
+begin
+  require 'wallpaper'
+rescue LoadError
+  require 'rubygems'
+  require 'wallpaper'
+end
 
-Wallpaper.start
+include Wallpaper
+
+Wallpaper.set('67P')
+
+def help
+  puts 'TODO: write help'
+end
+
+def set_wallpaper
+  tags = 'nature'
+  runner = Wallpaper::Runner.new(tags)
+  runner.run
+end
+
+def print_version
+  puts Wallpaper::VERSION
+  exit 0
+end
+
+set_wallpaper
