@@ -1,6 +1,6 @@
 require 'mini_magick'
 require 'tempfile'
-module Wallpaper
+module Hexapic
   class Collage
     attr_reader :height, :width
 

@@ -1,5 +1,5 @@
 require_relative "desktop_environment"
-module Wallpaper
+module Hexapic
   module WallpaperSetter
     class XFCE4
       def set(path)

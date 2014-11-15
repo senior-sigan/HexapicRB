@@ -1,4 +1,4 @@
-module Wallpaper
+module Hexapic
   class Runner
     def initialize(tags)
       @tags = tags.to_s

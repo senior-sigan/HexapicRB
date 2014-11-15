@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'wallpaper/version'
+require 'hexapic/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'wallpaper'
-  spec.version       = Wallpaper::VERSION
+  spec.name          = 'hexapic'
+  spec.version       = Hexapic::VERSION
   spec.authors       = ['Ilya Siganov']
   spec.email         = ['ilya.blan4@gmail.com']
   spec.summary       = 'Set desktop wallpaper from social networks'
-  spec.description   = "Pick a random pic from flickr and set it as Linux's background."
-  spec.homepage      = 'https://bitbucket.org/senior_sigan/wallpaper_rb'
+  spec.description   = "Pick a 6 latest pics from flickr, instagram or twitter, make collage of its and set it as Linux's background."
+  spec.homepage      = 'https://github.com/blan4/Hexapic'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")

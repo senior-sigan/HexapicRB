@@ -1,7 +1,7 @@
 require 'flickr'
 require 'instagram'
 require 'uri'
-module Wallpaper
+module Hexapic
   module Repository
     COUNT = 6
 
