@@ -16,8 +16,9 @@ end
 
 def set_wallpaper
   tags = Choice.choices[:tags] || ENV['WALLPAPER_TAGS'] || 'nature'
+  repository = Choice.choices[:repository] || ENV['WALLPAPER_REPOSITPRY'] || :instagram
   runner = Wallpaper::Runner.new(tags)
-  runner.run
+  runner.run(repository)
 end
 
 def print_version
@@ -31,6 +32,13 @@ Choice.options do
     short '-v'
     desc 'print version and exit'
     action { print_version }
+  end
+
+  option :repository do
+    long '--repository=REPOSITORY'
+    short '-r'
+    desc 'Chose where to load pictures. Chose one of flickr, instagram.'
+    cast Symbol
   end
 
   option :tags do

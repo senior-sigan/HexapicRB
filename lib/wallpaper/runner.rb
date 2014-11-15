@@ -4,10 +4,10 @@ module Wallpaper
       @tags = tags.to_s
     end
     
-    def run
+    def run(repository = :instagram)
       collage = Collage.new
       setter = WallpaperSetter.build  
-      repository = Repository::InstagramRepository.new
+      repository = Repository::LIST[repository].new
       pictures = repository.find_pictures(@tags)
       picture = collage.make(pictures)
 

@@ -1,25 +1,33 @@
 require 'flickr'
 require 'instagram'
+require 'uri'
 module Wallpaper
   module Repository
+    COUNT = 6
+
     class TestRepository
+      def initialize
+        puts 'Using Local Dir'
+      end
+
       def find_pictures(tag)
         path = "/home/ilya/Pictures/wallpaper/10810006_1487374498191383_1977583548_n.jpg"
-        (1..6).map { Picture.new(path, path, path, path) }
+        (1..COUNT).map { Picture.new(path, path, path, path) }
       end
     end
 
     class InstagramRepository
       CLIENT_ID = '417c3ee8c9544530b83aa1c24de2abb3'
-      COUNT = 6
 
       def initialize
         @instagram = Instagram.client(client_id: CLIENT_ID)
+        puts 'Using Instagram'
       end
 
       def find_pictures(tag)
+        tag = URI.encode(tag.split(',').first)
         puts "Getting last images by tag #{tag}"
-        pics = @instagram.tag_recent_media(tag, {count: 100}).sort{|a,b| b.likes[:count] <=> a.likes[:count]}.take(COUNT).map do |r|
+        pics = @instagram.tag_recent_media(tag).sample(COUNT).map do |r|
           url = r.images.standard_resolution.url
           Picture.new(url, url, url.split('/').last)
         end
@@ -36,6 +44,7 @@ module Wallpaper
       
       def initialize
         @flickr = Flickr.new(api_key: API_KEY, verify_ssl: false)
+        puts 'Using Flickr'
       end
       
       def find_pictures(tags)
@@ -44,12 +53,16 @@ module Wallpaper
         options[:tags] = tags
         options[:sort] = 'relevance'
         options[:content_type] = '1'
-        options[:extras] = 'url_o,url_l'
-        photos = @flickr.search(options)
-        photo = photos.sample
-        puts photo.url
+        options[:extras] = 'url_q,url_sq,url_s'
+        puts "Getting last images by tags #{tags}"
+        pics = @flickr.search(options).sample(COUNT).map do |photo|
+          Picture.new(photo.source('Large Square'), photo.url, photo.filename)
+        end
 
-        [Picture.new(photo.source('Large'), photo.url, photo.filename)]
+        raise ImagesNotFound.new("Found only #{pics.size} images. Need #{COUNT}.") if pics.size < COUNT 
+        pics
+      rescue Exception => e
+        raise NoInternet.new(e.message)
       end
     end
 
@@ -66,5 +79,6 @@ module Wallpaper
 
     class ImagesNotFound < StandardError; end
     class NoInternet < StandardError; end
+    LIST = {flickr: FlickrRepository, instagram: InstagramRepository}
   end
 end
