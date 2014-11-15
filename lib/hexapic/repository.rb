@@ -1,6 +1,4 @@
 require 'flickr'
-require 'instagram'
-require 'uri'
 module Hexapic
   module Repository
     COUNT = 6
@@ -20,22 +18,19 @@ module Hexapic
       CLIENT_ID = '417c3ee8c9544530b83aa1c24de2abb3'
 
       def initialize
-        @instagram = Instagram.client(client_id: CLIENT_ID)
+        @instagram = API::Instagram.new(CLIENT_ID)
         puts 'Using Instagram'
       end
 
       def find_pictures(tag)
-        tag = URI.encode(tag.split(',').first)
+        tag.delete(',')
         puts "Getting last images by tag #{tag}"
-        pics = @instagram.tag_recent_media(tag).sample(COUNT).map do |r|
-          url = r.images.standard_resolution.url
-          Picture.new(url, url, url.split('/').last)
+        pics = @instagram.search(tag).sample(COUNT).map do |r|
+          Picture.new(r[:url], r[:link], r[:id])
         end
 
         raise ImagesNotFound.new("Found only #{pics.size} images. Need #{COUNT}.") if pics.size < COUNT 
         pics
-      rescue Exception => e
-        raise NoInternet.new(e.message)
       end
     end
 
@@ -61,8 +56,6 @@ module Hexapic
 
         raise ImagesNotFound.new("Found only #{pics.size} images. Need #{COUNT}.") if pics.size < COUNT 
         pics
-      rescue Exception => e
-        raise NoInternet.new(e.message)
       end
     end
 
