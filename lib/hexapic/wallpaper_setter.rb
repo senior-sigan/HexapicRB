@@ -3,7 +3,9 @@ module Hexapic
   module WallpaperSetter
     class XFCE4
       def set(path)
-        command = "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorLVDS1/workspace1/last-image -s #{path}"
+        out = DesktopEnvironment.output
+        command = "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor#{out}/workspace0/last-image -s #{path}"
+        command = "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor#{out}/workspace1/last-image -s #{path}"
         system command
       end  
     end  

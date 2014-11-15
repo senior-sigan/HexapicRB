@@ -22,4 +22,17 @@ module Hexapic
       DE[wm_name]
     end    
   end
+
+  def self.output
+    output_name = nil
+
+    Open3.popen3('xrandr' ,'| grep -e " connected [^(]" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/"') do |inp, out, err|
+      inp.close
+      err.close
+      output_name = out.strip
+      out.close
+    end
+
+    output_name
+  end
 end
