@@ -5,6 +5,7 @@ module Wallpaper
     def self.get(picture)
       file_path = self.generate_file_path(picture.filename)
       
+      puts "Downloading #{picture.url}"
       File.open(file_path, 'w') do |f|
         f.puts Net::HTTP.get_response(URI.parse(picture.url)).body
       end

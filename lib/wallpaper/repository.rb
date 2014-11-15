@@ -11,16 +11,23 @@ module Wallpaper
 
     class InstagramRepository
       CLIENT_ID = '417c3ee8c9544530b83aa1c24de2abb3'
+      COUNT = 6
 
       def initialize
         @instagram = Instagram.client(client_id: CLIENT_ID)
       end
 
       def find_pictures(tag)
-        @instagram.tag_recent_media(tag).map do |r|
+        puts "Getting last images by tag #{tag}"
+        pics = @instagram.tag_recent_media(tag, {count: 100}).sort{|a,b| b.likes[:count] <=> a.likes[:count]}.take(COUNT).map do |r|
           url = r.images.standard_resolution.url
           Picture.new(url, url, url.split('/').last)
-        end.sample(6)
+        end
+
+        raise ImagesNotFound.new("Found only #{pics.size} images. Need #{COUNT}.") if pics.size < COUNT 
+        pics
+      rescue Exception => e
+        raise NoInternet.new(e.message)
       end
     end
 
@@ -56,5 +63,8 @@ module Wallpaper
         @path = path
       end
     end
+
+    class ImagesNotFound < StandardError; end
+    class NoInternet < StandardError; end
   end
 end

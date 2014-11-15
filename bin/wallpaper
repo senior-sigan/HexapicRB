@@ -42,7 +42,11 @@ Choice.options do
 end
 
 if Choice.choices[:tags]
-  set_wallpaper
+  begin
+    set_wallpaper
+  rescue Exception => e
+    puts e.message
+  end
 elsif Choice.choices[:version]
   print_version
 else
