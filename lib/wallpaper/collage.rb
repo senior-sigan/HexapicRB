@@ -10,7 +10,7 @@ module Wallpaper
         Downloader.get pictures.first
       else
         images = []
-        file_path = Downloader.generate_file_path("#{rand(1000)}.jpg")
+        file_path = Downloader.generate_file_path
         pictures.map.with_index do |picture,index|
           Thread.new(index) do |i| 
             picture = Downloader.get(picture) if picture.path.nil?

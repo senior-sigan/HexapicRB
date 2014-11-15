@@ -15,7 +15,8 @@ module Wallpaper
       res
     end
 
-    def self.generate_file_path(filename)
+    def self.generate_file_path(filename = nil)
+      filename ||= (0...8).map { (65 + rand(26)).chr }.join + '.jpg'
       pictures_dir = File.join(Dir.home, 'Pictures', 'wallpaper')
       FileUtils.mkdir_p(pictures_dir) unless Dir.exists? pictures_dir
 
