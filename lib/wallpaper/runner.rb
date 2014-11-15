@@ -5,10 +5,11 @@ module Wallpaper
     end
     
     def run
+      collage = Collage.new
       setter = WallpaperSetter.build  
-      repository = Repository::FlickrRepository.new
-      picture = repository.find_picture(@tags)
-      picture.path = Downloader.get picture
+      repository = Repository::InstagramRepository.new
+      pictures = repository.find_pictures(@tags)
+      picture = collage.make(pictures)
 
       setter.set picture.path
     end

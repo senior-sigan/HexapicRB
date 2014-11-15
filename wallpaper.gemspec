@@ -18,9 +18,13 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.requirements << 'imagemagick'
+
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'minitest', '~> 5.4'
   spec.add_runtime_dependency 'choice', '~> 0.1'
   spec.add_runtime_dependency 'flickr.rb', '~> 1.2' 
+  spec.add_runtime_dependency 'instagram', '~> 1.1'
+  spec.add_runtime_dependency 'mini_magick', '~> 4.0'
 end

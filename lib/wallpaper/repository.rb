@@ -1,6 +1,29 @@
 require 'flickr'
+require 'instagram'
 module Wallpaper
   module Repository
+    class TestRepository
+      def find_pictures(tag)
+        path = "/home/ilya/Pictures/wallpaper/10810006_1487374498191383_1977583548_n.jpg"
+        (1..6).map { Picture.new(path, path, path, path) }
+      end
+    end
+
+    class InstagramRepository
+      CLIENT_ID = '417c3ee8c9544530b83aa1c24de2abb3'
+
+      def initialize
+        @instagram = Instagram.client(client_id: CLIENT_ID)
+      end
+
+      def find_pictures(tag)
+        @instagram.tag_recent_media(tag).map do |r|
+          url = r.images.standard_resolution.url
+          Picture.new(url, url, url.split('/').last)
+        end.sample(6)
+      end
+    end
+
     class FlickrRepository
       API_KEY = 'bd053065ce6662cb4b2f4c0be2b65266'
       
@@ -8,7 +31,7 @@ module Wallpaper
         @flickr = Flickr.new(api_key: API_KEY, verify_ssl: false)
       end
       
-      def find_picture(tags)
+      def find_pictures(tags)
         options = {}
         options[:tag_mode] = 'and'
         options[:tags] = tags
@@ -19,7 +42,7 @@ module Wallpaper
         photo = photos.sample
         puts photo.url
 
-        Picture.new(photo.source('Large'), photo.url, photo.filename)
+        [Picture.new(photo.source('Large'), photo.url, photo.filename)]
       end
     end
 
