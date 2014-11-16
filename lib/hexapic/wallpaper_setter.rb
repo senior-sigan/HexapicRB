@@ -31,7 +31,13 @@ module Hexapic
       end
     end
 
-    DE = {mate: Mate, gnome3: Gnome3, xfce4: XFCE4, kde4: KDE4}
+    DE = {
+      mate: Mate, 
+      gnome3: Gnome3, 
+      xfce4: XFCE4, 
+      kde4: KDE4, 
+      gala: Gnome3
+    }
 
     def self.build
       klass = DE[DesktopEnvironment.which]

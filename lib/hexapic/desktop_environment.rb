@@ -2,7 +2,13 @@ require 'open3'
 
 module Hexapic
   class DesktopEnvironment
-    DE = {'Metacity (Marco)'=> :mate, 'Xfwm4'=> :xfce4, 'Gnome3'=> :gnome3, 'Mutter (Muffin)'=> :cinnamon}
+    DE = {
+      'Metacity (Marco)'=> :mate, 
+      'Xfwm4'=> :xfce4, 
+      'Gnome3'=> :gnome3, 
+      'Mutter (Muffin)'=> :cinnamon, 
+      'Gala' => :gala
+    }
     
     def self.which
       wm_name = nil
