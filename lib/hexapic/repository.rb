@@ -1,4 +1,3 @@
-require 'flickr'
 module Hexapic
   module Repository
     COUNT = 6

@@ -1,5 +1,3 @@
-require 'mini_magick'
-require 'tempfile'
 module Hexapic
   class Collage
     attr_reader :height, :width

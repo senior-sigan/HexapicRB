@@ -1,4 +1,3 @@
-require_relative "desktop_environment"
 module Hexapic
   module WallpaperSetter
     class XFCE4

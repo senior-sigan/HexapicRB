@@ -1,5 +1,3 @@
-require 'open3'
-
 module Hexapic
   class DesktopEnvironment
     DE = {

@@ -1,5 +1,3 @@
-require 'fileutils'
-
 module Hexapic
   class Downloader
     def self.get(picture)

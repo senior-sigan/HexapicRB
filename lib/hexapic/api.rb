@@ -1,7 +1,3 @@
-require 'faraday'
-require 'json'
-require 'uri'
-
 module Hexapic
   module API
     class Instagram
