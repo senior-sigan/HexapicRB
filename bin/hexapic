@@ -10,10 +10,6 @@ end
 include Hexapic
 require 'choice'
 
-def help
-  puts 'TODO: write help'
-end
-
 def set_wallpaper
   tags = Choice.choices[:tags] || ENV['WALLPAPER_TAGS'] || 'nature'
   repository = Choice.choices[:repository] || ENV['WALLPAPER_REPOSITPRY'] || :instagram
@@ -58,5 +54,5 @@ if Choice.choices[:tags]
 elsif Choice.choices[:version]
   print_version
 else
-  help
+  Choice.help
 end
