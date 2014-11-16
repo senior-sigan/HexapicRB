@@ -25,7 +25,7 @@ module Hexapic
         end
       end
       
-      DE[wm_name]
+      DE[wm_name] || wm_name.to_sym
     end    
   end
 

@@ -31,7 +31,7 @@ module Hexapic
       end
     end
 
-    DE = {
+    SETTER = {
       mate: Mate, 
       gnome3: Gnome3, 
       xfce4: XFCE4, 
@@ -40,8 +40,13 @@ module Hexapic
     }
 
     def self.build
-      klass = DE[DesktopEnvironment.which]
-      klass.new unless klass.nil?
+      de = DesktopEnvironment.which
+      klass = SETTER[de]
+      if klass.nil?
+        raise "Unsupported DE #{de}. Please ask maitainer about it."
+      else
+        klass.new
+      end
     end
   end
 end
