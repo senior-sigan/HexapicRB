@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ['ilya.blan4@gmail.com']
   spec.summary       = 'Set desktop wallpaper from social networks'
   spec.description   = "Pick a 6 latest pics from flickr, instagram or twitter, make collage of its and set it as Linux's background."
-  spec.homepage      = 'https://github.com/blan4/Hexapic'
-  spec.metadata      = { 'issue_tracker' => 'https://github.com/blan4/Hexapic/issues' }
+  spec.homepage      = 'https://github.com/blan4/HexapicRB'
+  spec.metadata      = { 'issue_tracker' => 'https://github.com/blan4/HexapicRB/issues' }
   spec.post_install_message = 'Just call hexapic -t cat'
   spec.required_ruby_version = '>= 1.9.3' 
   spec.license       = 'MIT'

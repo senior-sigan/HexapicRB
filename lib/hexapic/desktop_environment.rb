@@ -14,9 +14,9 @@ module Hexapic
       Open3.popen3('xprop', '-root', '_NET_SUPPORTING_WM_CHECK') do |inp, out, err|
         inp.close
         err.close
-        winpdow_id = out.gets.split('#').last.strip
+        window_id = out.gets.split('#').last.strip
         out.close
-        Open3.popen3('xprop', '-id', winpdow_id, '8s', '_NET_WM_NAME') do |inp, out, err|
+        Open3.popen3('xprop', '-id', window_id, '8s', '_NET_WM_NAME') do |inp, out, err|
           inp.close
           err.close
           wm_name = out.gets.split('=').last.strip.gsub('"','')
