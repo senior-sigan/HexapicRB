@@ -1,14 +1,17 @@
 module Hexapic
-  class Runner
-    def initialize(tags)
-      @tags = tags.to_s
-    end
-    
-    def run(repository = :instagram)
+  class Runner   
+    def run(repository = :instagram, query, type)
       collage = Collage.new
       setter = WallpaperSetter.build  
       repository = Repository::LIST[repository].new
-      pictures = repository.find_pictures(@tags)
+      picture = nil
+      case type
+      when :tags
+        pictures = repository.find_pictures(query)
+      when :username
+        pictures = repository.find_pictures_by_username(query)              
+      end
+      
       picture = collage.make(pictures)
 
       setter.set picture.path

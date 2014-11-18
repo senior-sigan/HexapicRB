@@ -31,6 +31,16 @@ module Hexapic
         raise ImagesNotFound.new("Found only #{pics.size} images. Need #{COUNT}.") if pics.size < COUNT 
         pics
       end
+
+      def find_pictures_by_username(username)
+        puts "Getting last images from user #{username}"
+        pics = @instagram.search_by_user(username).sample(COUNT).map do |r|
+          Picture.new(r[:url], r[:link], r[:id])
+        end
+
+        raise ImagesNotFound.new("Found only #{pics.size} images. Need #{COUNT}.") if pics.size < COUNT 
+        pics
+      end
     end
 
     class FlickrRepository

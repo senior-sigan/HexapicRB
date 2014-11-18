@@ -11,10 +11,16 @@ include Hexapic
 require 'choice'
 
 def set_wallpaper
-  tags = Choice.choices[:tags] || ENV['WALLPAPER_TAGS'] || 'nature'
   repository = Choice.choices[:repository] || ENV['WALLPAPER_REPOSITPRY'] || :instagram
-  runner = Hexapic::Runner.new(tags)
-  runner.run(repository)
+  query = Choice.choices[:tags] || Choice.choices[:username]
+  runner = Hexapic::Runner.new
+  type = if Choice.choices[:tags]
+    :tags
+  elsif Choice.choices[:username]
+    :username
+  end
+
+  runner.run(repository, query, type)
 end
 
 def print_version
@@ -33,19 +39,26 @@ Choice.options do
   option :repository do
     long '--repository=REPOSITORY'
     short '-r'
-    desc 'Chose where to load pictures. Chose one of flickr, instagram.'
+    desc 'Chose where to load pictures from. Chose one of flickr, instagram. Default is instagram'
     cast Symbol
   end
 
   option :tags do
     long '--tags=TAGS'
     short '-t'
-    desc 'comma separated list of tags'
+    desc 'Comma separated list of tags'
+    cast String
+  end
+
+  option :username do
+    long '--username=USERNAME'
+    short '-u'
+    desc 'Instagram username'
     cast String
   end
 end
 
-if Choice.choices[:tags]
+if Choice.choices[:tags] || Choice.choices[:username]
   begin
     set_wallpaper
   rescue Exception => e
